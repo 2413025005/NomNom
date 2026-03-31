@@ -223,7 +223,6 @@ spawnFood() {
 
   end() {
     // 🔊 SOUND GAME OVER
-    gameOverSound.pause();
     gameOverSound.currentTime = 0;
     gameOverSound.play();
 
@@ -258,10 +257,16 @@ function startGame() {
 
 /* RESTART */
 // reset sound game over
-gameOverSound.pause();
-gameOverSound.currentTime = 0;
-
 function restartGame() {
+
+  // stop sound game over
+  gameOverSound.pause();
+  gameOverSound.currentTime = 0;
+
+  // nyalain bgm lagi
+  bgm.currentTime = 0;
+  bgm.play();
+
   document.getElementById("gameOver").style.display = "none";
   startGame();
 }
