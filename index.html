@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NomNom Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+
+  <div class="top-controls-left">
+    <button id="soundBtn">🔊</button>
+    <button id="themeBtn">🌙</button>
+  </div>
+
+  <div class="title-wrapper">
+    <span class="food-deco deco-apple">🍎</span>
+    <span class="food-deco deco-donut">🍩</span>
+    <h1 class="title">NOMNOM</h1>
+    <span class="food-deco deco-strawberry">🍓</span>
+    <span class="food-deco deco-cupcake">🧁</span>
+  </div>
+
+  <!-- ===== CHARACTER SELECT ===== -->
+  <div class="char-select">
+    <p class="char-label">PILIH KARAKTER</p>
+    <div class="char-options">
+      <button class="char-btn selected" data-char="yellow">
+        <img src="assets/player/normal m.png" alt="Kuning">
+        <span>Kuning</span>
+      </button>
+      <button class="char-btn" data-char="pink">
+        <img src="assets/player/normal.png" alt="Pink">
+        <span>Pink</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="play-wrapper">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">✦</span>
+    <span class="sparkle s3">✦</span>
+    <button class="btn" onclick="startGame()">PLAY</button>
+  </div>
+
+  <!-- TOP SCORE BANNER -->
+  <div class="topscore-banner">
+    <span class="topscore-crown">👑</span>
+    <span class="topscore-label">HIGH SCORE</span>
+    <span class="topscore-value" id="menuHighScore">0</span>
+    <span class="topscore-msg" id="menuHighScoreMsg"></span>
+  </div>
+
+  <div class="bottom-panels">
+    <div class="card left">
+      <h3>🕹️ HOW TO PLAY</h3>
+      <div class="card-row">
+        <span class="icon-box">🖱️</span>
+        <p>1. GERAK MOUSE / SENTUH LAYAR UNTUK PINDAH.</p>
+      </div>
+      <div class="card-row">
+        <span class="icon-box">👾</span>
+        <p>2. TANGKAP MAKANAN YANG JATUH UNTUK POIN.</p>
+      </div>
+    </div>
+    <div class="card right">
+      <h3>⭐ SCORING</h3>
+      <div class="score-grid">
+        <div class="score-item">
+          <span class="score-icon">🍩</span>
+          <span class="score-pts">+10</span>
+        </div>
+        <div class="score-item">
+          <span class="score-icon">✨</span>
+          <span class="score-pts">+30</span>
+        </div>
+        <div class="score-item bomb-item">
+          <span class="score-icon">💣</span>
+          <span class="score-pts dodge">DODGE!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #menu -->
+
+<!-- Mobile joystick (hanya muncul di mobile) -->
+<div id="mobileControls">
+  <button id="btnLeft" class="joy-btn">◀</button>
+  <button id="btnRight" class="joy-btn">▶</button>
+</div>
+
+<canvas id="gameCanvas"></canvas>
+
+<div id="quizOverlay" style="display:none;">
+  <div id="reviveBox" class="mini-box">
+    <p>Ups! Mau hidup lagi? Jawab soal dulu yuk!</p>
+    <div class="button-group">
+      <button class="btn-kecil" onclick="tanyaSoal()">YES</button>
+      <button class="btn-kecil btn-abu" onclick="finalGameOver()">NO</button>
+    </div>
+  </div>
+
+  <div id="soalBox" class="mini-box" style="display:none;">
+    <p id="teksSoal"></p>
+    <input type="number" id="jawabanKamu" placeholder="...">
+    <button class="btn-kecil" onclick="cekJawaban()">KIRIM</button>
+  </div>
+</div><!-- end #quizOverlay -->
+
+<div id="gameOver" style="display:none;">
+  <h1 class="title">GAME OVER!</h1>
+  <div class="scoreBox">
+    <div class="score-row">
+      <p>SKOR TOTAL</p>
+      <h2 id="finalScore">0</h2>
+    </div>
+    <div class="score-divider"></div>
+    <div class="score-row">
+      <p>HIGH SCORE</p>
+      <h2 id="highScore">0</h2>
+    </div>
+  </div>
+  <button id="tombolUlang" class="btn" onclick="restartGame()">PLAY AGAIN</button>
+  <button id="tombolMenu" class="btn btn-kuning" onclick="backToMenu()">MENU</button>
+</div><!-- end #gameOver -->
+
+<!-- Modal feedback in-game (ganti alert) -->
+<div id="feedbackOverlay" style="display:none;">
+  <div id="feedbackBox" class="feedback-box">
+    <div id="feedbackIcon" class="feedback-icon">🎉</div>
+    <p id="feedbackText" class="feedback-text"></p>
+    <button id="feedbackBtn" class="btn-kecil">OK</button>
+  </div>
+</div>
+
+<script>
+  // Deteksi touch device sejak awal — tidak menunggu DOMContentLoaded
+  if (navigator.maxTouchPoints > 0 || 'ontouchstart' in window) {
+    document.body.classList.add('is-touch');
+  }
+
+  // Tampilkan high score di menu saat halaman dibuka
+  (function() {
+    const saved = parseInt(localStorage.getItem("highScore")) || 0;
+    const el    = document.getElementById("menuHighScore");
+    const msg   = document.getElementById("menuHighScoreMsg");
+    if (el) el.textContent = saved;
+    if (msg) {
+      if (saved === 0) {
+        msg.textContent = "Belum ada rekor — jadilah yang pertama!";
+      } else if (saved < 50) {
+        msg.textContent = "Kamu bisa lebih tinggi! 💪";
+      } else if (saved < 150) {
+        msg.textContent = "Bagus! Coba kalahkan rekormu! 🔥";
+      } else {
+        msg.textContent = "Luar biasa! Pertahankan! 🏆";
+      }
+    }
+  })();
+</script>
+
+<script type="module" src="js/main.js"></script>
+<script>
+  // Mobile joystick: tahan tombol = terus gerak
+  (function() {
+    const SPEED = 12;
+    let leftInterval = null, rightInterval = null;
+
+    function pressLeft() {
+      if (leftInterval) return;
+      leftInterval = setInterval(() => {
+        if (window.__game) window.__game.keys["ArrowLeft"] = true;
+      }, 16);
+    }
+    function releaseLeft() {
+      clearInterval(leftInterval); leftInterval = null;
+      if (window.__game) window.__game.keys["ArrowLeft"] = false;
+    }
+    function pressRight() {
+      if (rightInterval) return;
+      rightInterval = setInterval(() => {
+        if (window.__game) window.__game.keys["ArrowRight"] = true;
+      }, 16);
+    }
+    function releaseRight() {
+      clearInterval(rightInterval); rightInterval = null;
+      if (window.__game) window.__game.keys["ArrowRight"] = false;
+    }
+
+    const btnL = document.getElementById("btnLeft");
+    const btnR = document.getElementById("btnRight");
+
+    btnL.addEventListener("touchstart",  e => { e.preventDefault(); pressLeft();   }, { passive: false });
+    btnL.addEventListener("touchend",    e => { e.preventDefault(); releaseLeft();  }, { passive: false });
+    btnL.addEventListener("mousedown",   pressLeft);
+    btnL.addEventListener("mouseup",     releaseLeft);
+    btnL.addEventListener("mouseleave",  releaseLeft);
+
+    btnR.addEventListener("touchstart",  e => { e.preventDefault(); pressRight();  }, { passive: false });
+    btnR.addEventListener("touchend",    e => { e.prevenstDefault(); releaseRight(); }, { passive: false });
+    btnR.addEventListener("mousedown",   pressRight);
+    btnR.addEventListener("mouseup",     releaseRight);
+    btnR.addEventListener("mouseleave",  releaseRight);
+  })();
+</script>
+</body>
+</html>

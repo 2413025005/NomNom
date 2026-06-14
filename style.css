@@ -1,0 +1,984 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Fredoka One', cursive;
+}
+
+/* BACKGROUND */
+body {
+  background: url("assets/bg.jpeg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* ================= SOUND BUTTON ================= */
+
+#soundBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50%;
+  background: #ff8fab;
+  color: white;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 0 #c94f77;
+  transition: transform 0.1s;
+}
+
+#soundBtn:active {
+  transform: scale(0.9);
+}
+
+/* ================= MENU ================= */
+
+#menu {
+  position: relative;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 5%;
+}
+
+/* ===== TITLE WRAPPER ===== */
+.title-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* TITLE NOMNOM */
+.title-wrapper .title {
+  font-size: 110px;
+  color: #fff5f8;
+  -webkit-text-stroke: 6px #ff6b9a;
+  text-shadow:
+    0 8px 0 #ff6b9a,
+    0 12px 20px rgba(255, 107, 154, 0.4);
+  margin: 0;
+  letter-spacing: 4px;
+  paint-order: stroke fill;   /* ← tambah ini */
+  font-weight: 900;
+}
+
+/* Dekorasi makanan melayang di sekitar judul */
+.food-deco {
+  position: absolute;
+  font-size: 44px;
+  animation: floatDeco 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.deco-apple  { top: -30px; left: -60px;  animation-delay: 0s; }
+.deco-donut  { top: -40px; right: -60px; animation-delay: 0.5s; }
+.deco-strawberry { bottom: -10px; left: -50px; animation-delay: 1s; }
+.deco-cupcake    { bottom: -10px; right: -50px; animation-delay: 1.5s; }
+
+@keyframes floatDeco {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%       { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* ===== PLAY BUTTON WRAPPER ===== */
+.play-wrapper {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+/* Sparkle di sekitar tombol */
+.sparkle {
+  position: absolute;
+  color: #ffe066;
+  font-size: 22px;
+  animation: sparklePop 1.8s ease-in-out infinite;
+}
+
+.s1 { top: -18px; left: 10px;  animation-delay: 0s; }
+.s2 { top: -18px; right: 10px; animation-delay: 0.6s; }
+.s3 { bottom: -14px; left: 50%; transform: translateX(-50%); animation-delay: 1.2s; }
+
+@keyframes sparklePop {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+
+/* BUTTON PLAY */
+.play-wrapper .btn {
+  padding: 18px 90px;
+  font-size: 36px;
+  font-family: 'Fredoka One', cursive;
+  border-radius: 60px;
+  border: 4px solid rgba(255,255,255,0.7);
+  background: linear-gradient(160deg, #ffaac8, #ff6b9a);
+  color: white;
+  box-shadow:
+    0 8px 0 #c94f77,
+    0 12px 30px rgba(255, 107, 154, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 3px;
+}
+
+.play-wrapper .btn:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow:
+    0 10px 0 #c94f77,
+    0 16px 35px rgba(255, 107, 154, 0.5);
+}
+
+.play-wrapper .btn:active {
+  transform: scale(0.97) translateY(4px);
+  box-shadow: 0 4px 0 #c94f77;
+}
+
+/* ===== BOTTOM PANELS ===== */
+.bottom-panels {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 50px;
+  pointer-events: none;
+}
+
+/* CARD UMUM */
+.card {
+  width: 250px;
+  padding: 23px 25px;
+  border-radius: 28px;
+  background: rgba(255, 220, 232, 0.88);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 8px 0 #e7a5b5,
+    0 12px 25px rgba(200, 80, 120, 0.2);
+  text-align: left;
+  pointer-events: all;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+}
+
+/* JUDUL CARD */
+.card h3 {
+  margin: 0 0 14px 0;
+  color: #c0304a;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Row untuk how to play */
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.icon-box {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.card-row p {
+  margin: 0;
+  color: #5a2a35;
+  font-size: 15px;
+  line-height: 1.4;
+  font-family: 'Fredoka One', cursive;
+}
+
+/* SCORING GRID */
+.score-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.score-icon {
+  font-size: 32px;
+}
+
+.score-pts {
+  font-size: 22px;
+  color: #c0304a;
+  font-family: 'Fredoka One', cursive;
+}
+
+.score-pts.dodge {
+  color: #333;
+  font-size: 18px;
+}
+
+.bomb-item {
+  margin-top: 4px;
+}
+
+/* ================= CANVAS ================= */
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 1;
+}
+
+/* ================= GAME OVER (VERSI PRESISI & ESTETIK) ================= */
+
+#gameOver {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Gemini kasih background gelap transparan biar fokus ke kotak tengah */
+  background: rgba(0, 0, 0, 0.3); 
+  backdrop-filter: blur(5px); /* Efek blur biar estetik */
+  display: none; /* Nanti di script.js diganti jadi 'flex' */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* KUNCI PRESISI: Semua tumpukan ada di tengah layar */
+  z-index: 100;
+  padding: 0; /* Hapus padding biar justify-center akurat */
+}
+
+#gameOver .title {
+  font-size: 70px; /* Ukuran pas kayak di gambar */
+  color: #ffd6e0;
+  -webkit-text-stroke: 4px #ff6b9a;
+  text-shadow: 0 6px 0 #ff6b9a;
+  margin: 0 0 20px 0; /* Jarak bawah title */
+}
+
+/* Kotak Skor Bertingkat (Presisi) */
+.scoreBox {
+  background: rgba(255, 228, 236, 0.95);
+  padding: 25px 50px;
+  border-radius: 25px;
+  border: 4px solid white;
+  box-shadow: 0 8px 0 #e7a5b5;
+  text-align: center;
+  margin-bottom: 25px; /* Jarak ke kotak kuis */
+  min-width: 280px;
+}
+
+.score-divider {
+  height: 3px;
+  background: rgba(255, 107, 154, 0.5);
+  margin: 15px 0;
+  border-radius: 10px;
+}
+
+/* Kotak Kuis/Revive (Estetik) */
+.mini-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 20px;
+  border: 3px solid #ff8fab;
+  margin-bottom: 20px; /* Jarak ke tombol */
+  box-shadow: 0 6px 0 #e7a5b5;
+  text-align: center;
+  max-width: 90%; /* Biar gak luber di HP */
+}
+
+/* Biar tombol-tombolnya berjejer rapi ke bawah dan PRESISI tengah */
+#gameOver .btn {
+  margin-top: 10px;
+  width: 250px; /* Lebarin dikit biar gagah */
+  display: block; /* Tumpuk atas bawah */
+  margin-left: auto; /* Tengahin otomatis */
+  margin-right: auto; /* Tengahin otomatis */
+}
+
+/* Tombol Menu Kuning Gemoy */
+.btn-kuning {
+  background: linear-gradient(145deg, #ffeb3b, #fbc02d) !important;
+  box-shadow: 0 8px 0 #f57f17 !important;
+  color: #5a2a35 !important;
+  margin-top: 15px !important; /* Jarak dari Play Again */
+}
+
+#gameOver .title {
+  font-size: 60px;
+  color: #ffd6e0;
+  -webkit-text-stroke: 4px #ff6b9a;
+  margin-bottom: 20px;
+}
+
+/* Kotak Skor yang tadi kita bagi dua */
+.scoreBox {
+  background: rgba(255, 228, 236, 0.95);
+  padding: 20px 40px;
+  border-radius: 25px;
+  border: 3px solid white;
+  box-shadow: 0 8px 0 #e7a5b5;
+  text-align: center;
+  margin-bottom: 20px;
+  min-width: 250px;
+}
+
+.score-divider {
+  height: 2px;
+  background: #ff8fab;
+  margin: 10px 0;
+  opacity: 0.5;
+}
+
+/* Kotak Kuis/Revive biar gak makan tempat */
+.mini-box {
+  background: white;
+  padding: 15px 25px;
+  border-radius: 20px;
+  border: 3px solid #ff8fab;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 0 #e7a5b5;
+  max-width: 90%;
+}
+
+/* Biar tombol-tombolnya berjejer rapi ke bawah */
+#gameOver .btn {
+  margin-top: 10px;
+  width: 220px; /* Samain biar rapi ukurannya */
+  display: block;
+}
+
+.btn-kuning {
+  background: linear-gradient(145deg, #ffeb3b, #fbc02d) !important;
+  box-shadow: 0 6px 0 #f57f17 !important;
+  color: #5a2a35 !important;
+}
+
+/* TITLE GAME OVER */
+#gameOver .title {
+  font-size: 70px;
+  color: #ffd6e0;
+  -webkit-text-stroke: 5px #ff6b9a;
+  text-shadow: 0 6px 0 #ff6b9a;
+}
+
+/* BOX SCORE */
+.scoreBox {
+  margin-top: 20px;
+  padding: 25px 50px;
+  display: inline-block;
+  background: rgba(255, 228, 236, 0.92);
+  border-radius: 25px;
+  box-shadow: 0 8px 0 #e7a5b5;
+  font-size: 30px;
+  color: #5a2a35;
+  border: 3px solid rgba(255,255,255,0.6);
+}
+
+/* BUTTON RESTART */
+#gameOver .btn {
+  display: block;
+  margin: 25px auto 0;
+  padding: 18px 70px;
+  font-size: 24px;
+  font-family: 'Fredoka One', cursive;
+  border-radius: 50px;
+  border: 3px solid rgba(255,255,255,0.6);
+  background: linear-gradient(145deg, #ff9eb5, #ff6b9a);
+  color: white;
+  box-shadow: 0 8px 0 #c94f77;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+#gameOver .btn:hover {
+  transform: scale(1.05);
+}
+
+/* Kotak kuis kecil yang lucu */
+.mini-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 20px;
+  border: 4px solid #ff8fab;
+  margin-top: 15px;
+  box-shadow: 0 5px 0 #e7a5b5;
+}
+
+.mini-box p {
+  color: #c0304a;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-kecil {
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: none;
+  background: #ff8fab;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c94f77;
+}
+
+.btn-abu {
+  background: #bdc3c7;
+  box-shadow: 0 4px 0 #95a5a6;
+}
+
+#jawabanKamu {
+  width: 60px;
+  padding: 5px;
+  border-radius: 8px;
+  border: 2px solid #ff8fab;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+}
+
+/* Bikin isi scoreBox jadi berderet atau bertingkat rapi */
+.scoreBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.score-row p {
+  font-size: 16px; /* Tulisan judul skor lebih kecil dikit */
+  margin: 5px 0;
+}
+
+.score-row h2 {
+  font-size: 36px; /* Angka skor tetep besar */
+  margin: 0;
+}
+
+/* Garis pemisah di tengah-tengah */
+.score-divider {
+  height: 3px;
+  background: rgba(255, 107, 154, 0.3);
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+/* Tombol Menu yang warnanya beda biar lucu */
+.btn-kuning {
+  background: linear-gradient(145deg, #ffeb3b, #fbc02d) !important;
+  box-shadow: 0 8px 0 #f57f17 !important;
+  margin-top: 10px !important;
+}
+
+.btn-kuning:hover {
+  transform: scale(1.05);
+}
+
+/* Bikin area tombol dan kotak kuis bisa berjejer */
+.game-over-layout {
+  display: flex;
+  flex-direction: row; /* Ini kuncinya biar ke samping! */
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px; /* Jarak antara kotak kuis dan tombol menu */
+  margin-top: 10px;
+  flex-wrap: wrap; /* Biar kalau layarnya kecil, dia otomatis turun sendiri */
+}
+
+/* Atur tombol biar ukurannya pas di samping kotak */
+.action-buttons {
+  display: flex;
+  flex-direction: column; /* Tombol Play Again & Menu tetep tumpuk atas bawah */
+  gap: 10px;
+}
+
+#gameOver .btn {
+  width: 180px; /* Kecilin dikit biar muat di samping */
+  margin-top: 0;
+}
+
+/* Layout Sampingan (Punya kamu sudah pinter!) */
+.game-over-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  flex-wrap: wrap; /* Tambahin ini ya, biar kalau layarnya sempit dia nggak maksa */
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Biar mini-box kuisnya cantik pas sampingan */
+.mini-box {
+  background: white;
+  padding: 15px 25px;
+  border-radius: 20px;
+  border: 3px solid #ff8fab;
+  box-shadow: 0 5px 0 #e7a5b5;
+  margin-bottom: 0; 
+  min-width: 260px;
+  text-align: center;
+}
+
+/* Biar tombol MENU dan PLAY AGAIN ukurannya sama cantik */
+#gameOver .btn {
+  width: 180px; /* Kita kencengin ukurannya biar kembar */
+  padding: 12px 0;
+  font-size: 20px;
+  margin: 0; /* Hapus margin bawaan biar nurut sama gap */
+}
+
+.btn-kuning {
+  background: linear-gradient(145deg, #ffeb3b, #fbc02d) !important;
+  box-shadow: 0 6px 0 #f57f17 !important;
+  color: #5a2a35 !important;
+}
+
+/* Overlay Kuis di tengah layar Game */
+#quizOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50; /* Di atas canvas, di bawah Game Over */
+  background: rgba(0, 0, 0, 0.1); /* Tipis aja biar layar game masih keliatan */
+}
+
+/* Pastikan Game Over tetap di tengah presisi */
+#gameOver {
+  /* ... kode yang presisi tadi tetap dipakai ya ... */
+  z-index: 100;
+}
+
+/* Overlay Kuis di tengah layar Game */
+#quizOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50; /* Di atas canvas, di bawah Game Over */
+  background: rgba(0, 0, 0, 0.1); /* Tipis aja biar layar game masih keliatan */
+}
+
+/* Pastikan Game Over tetap di tengah presisi */
+#gameOver {
+  /* ... kode yang presisi tadi tetap dipakai ya ... */
+  z-index: 100;
+}
+
+/* Atur posisi tombol di pojok kanan atas biar sejajar */
+.top-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px; /* Jarak antar tombol */
+  z-index: 999;
+}
+
+/* Style tombol tema (sama kayak soundBtn) */
+#themeBtn {
+  font-size: 24px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  background: #6a5acd; /* Warna ungu malam */
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #483d8b;
+  transition: transform 0.1s;
+}
+
+#themeBtn:active { transform: scale(0.9); }
+
+/* ===== TEMA GELAP (DARK MODE) ===== */
+body.dark-mode {
+  background: url("assets/bg\ malam.jpeg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.dark-mode #menu .title-wrapper .title {
+  color: #dfe6e9;
+  -webkit-text-stroke: 6px #2d3436;
+  text-shadow: 0 8px 0 #2d3436;
+}
+
+body.dark-mode .card {
+  background: rgba(45, 52, 54, 0.9);
+  border: 3px solid #636e72;
+  box-shadow: 0 8px 0 #2d3436;
+}
+
+body.dark-mode .card h3, 
+body.dark-mode .card-row p,
+body.dark-mode .score-pts {
+  color: #fab1a0; /* Warna pastel biar tetep keliatan */
+}
+
+
+/* ================= CHARACTER SELECT ================= */
+
+.char-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.char-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 18px;
+  color: #c0304a;
+  letter-spacing: 2px;
+  margin: 0 0 10px 0;
+}
+
+body.dark-mode .char-label {
+  color: #fab1a0;
+}
+
+.char-options {
+  display: flex;
+  gap: 20px;
+}
+
+.char-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 220, 232, 0.85);
+  border: 4px solid transparent;
+  border-radius: 20px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 0 #e7a5b5;
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+  color: #5a2a35;
+}
+
+.char-btn img {
+  width: 64px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.char-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+}
+
+.char-btn.selected {
+  border-color: #ff6b9a;
+  background: rgba(255, 200, 220, 0.95);
+  box-shadow: 0 6px 0 #c94f77, 0 0 0 2px #fff;
+  transform: scale(1.05);
+}
+
+body.dark-mode .char-btn {
+  background: rgba(45, 52, 54, 0.85);
+  color: #fab1a0;
+  box-shadow: 0 4px 0 #2d3436;
+}
+
+body.dark-mode .char-btn.selected {
+  border-color: #fab1a0;
+  background: rgba(60, 60, 70, 0.95);
+}
+
+/* ================= MOBILE JOYSTICK ================= */
+
+/* Selalu tersembunyi secara default */
+#mobileControls {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/*
+  Hanya tampil jika:
+  1. Perangkat adalah touch device  → body.is-touch
+  2. Game sedang berjalan           → body.game-active
+  Jika salah satu tidak terpenuhi, joystick tetap tersembunyi.
+*/
+body.is-touch.game-active #mobileControls {
+  display: flex;
+}
+
+.joy-btn {
+  pointer-events: all;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 107, 154, 0.82);
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 5px 0 #c94f77;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.joy-btn:active {
+  transform: scale(0.9);
+  opacity: 0.85;
+}
+
+/* ================= RESPONSIVE: MOBILE ================= */
+
+@media (max-width: 600px) {
+  /* Menu */
+  #menu {
+    padding-top: 10%;
+    justify-content: flex-start;
+  }
+
+  /* Judul lebih kecil */
+  .title-wrapper .title {
+    font-size: 64px;
+    letter-spacing: 2px;
+    -webkit-text-stroke: 4px #ff6b9a;
+  }
+
+  .food-deco { font-size: 28px; }
+  .deco-apple      { left: -36px; }
+  .deco-donut      { right: -36px; }
+  .deco-strawberry { left: -30px; }
+  .deco-cupcake    { right: -30px; }
+
+  /* Char select */
+  .char-btn img { width: 52px; height: 58px; }
+  .char-btn { padding: 8px 12px; }
+
+  /* Tombol PLAY */
+  .play-wrapper .btn {
+    padding: 14px 60px;
+    font-size: 26px;
+  }
+
+  /* Sembunyikan bottom panels agar tidak penuh */
+  .bottom-panels {
+    position: relative;
+    bottom: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    margin-top: 12px;
+  }
+
+  .card {
+    width: 90vw;
+    max-width: 340px;
+    padding: 14px 16px;
+  }
+
+  /* Game Over */
+  #gameOver .title  { font-size: 48px; }
+  .scoreBox         { padding: 16px 28px; }
+  .score-row h2     { font-size: 28px; }
+  #gameOver .btn    { width: 160px; font-size: 18px; padding: 12px 0; }
+
+  /* Quiz overlay */
+  .mini-box { padding: 14px 18px; }
+  .mini-box p { font-size: 15px; }
+}
+
+@media (max-width: 400px) {
+  .title-wrapper .title { font-size: 52px; }
+  .play-wrapper .btn    { padding: 12px 48px; font-size: 22px; }
+  .joy-btn              { width: 60px; height: 60px; font-size: 22px; }
+}
+
+/* ================= LANDSCAPE MOBILE ================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  #menu {
+    padding-top: 2%;
+  }
+
+  .title-wrapper .title { font-size: 52px; }
+  .char-select { margin-bottom: 4px; }
+  .char-btn img { width: 44px; height: 48px; }
+  .play-wrapper { margin-top: 6px; margin-bottom: 10px; }
+  .play-wrapper .btn { padding: 10px 50px; font-size: 22px; }
+  .bottom-panels { display: none; }
+
+  .joy-btn { width: 60px; height: 60px; font-size: 22px; }
+}
+
+/* ===== TOP CONTROLS GROUP (sound + theme) ===== */
+.top-controls-left {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  z-index: 999;
+}
+
+/* Override individual fixed positioning since they're in a group now */
+#soundBtn, #themeBtn {
+  position: static;
+}
+
+/* ===== FEEDBACK MODAL (in-game, ganti alert) ← DIUBAH ===== */
+#feedbackOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.45);
+  animation: fadeInBg 0.2s ease;
+}
+
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.feedback-box {
+  background: #fff5f8;
+  border: 4px solid #a8e6cf;
+  border-radius: 24px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(255, 107, 154, 0.3);
+  animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: 240px;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.feedback-icon {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.feedback-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: #5a2a35;
+  margin: 0 0 20px 0;
+}
+
+#feedbackBtn {
+  min-width: 100px;
+  font-size: 18px;
+}
+
+/* ===== TOP SCORE BANNER DI MENU ===== */
+.topscore-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #fff0f6 0%, #ffe4f0 100%);
+  border: 3px solid #ff8fab;
+  border-radius: 50px;
+  padding: 10px 28px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 0 #f76b9a, 0 8px 20px rgba(255, 107, 154, 0.2);
+  animation: tsBounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 480px;
+}
+
+@keyframes tsBounceIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.topscore-crown {
+  font-size: 28px;
+  animation: crownWiggle 1.8s ease-in-out infinite;
+}
+
+@keyframes crownWiggle {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50%       { transform: rotate(8deg)  scale(1.15); }
+}
+
+.topscore-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  color: #c94f77;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.topscore-value {
+  font-family: 'Fredoka One', cursive;
+  font-size: 36px;
+  color: #ff3b7f;
+  text-shadow: 0 3px 0 #c94f77;
+  min-width: 50px;
+  text-align: center;
+  animation: tsPulse 2s ease-in-out infinite;
+}
+
+@keyframes tsPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+.topscore-msg {
+  width: 100%;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  color: #e05080;
+  margin-top: -4px;
+  letter-spacing: 0.5px;
+}
